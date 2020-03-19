@@ -1,0 +1,8 @@
+{
+  "short_name": "wi-outbreak",
+  "name": "wi-outbreak",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
