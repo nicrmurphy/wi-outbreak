@@ -1,41 +1,65 @@
-import React from 'react'
-import { mapdata, statemap, runnable } from 'flamap'
+import React, { useState, useEffect } from 'react'
+import { statemap } from 'flamap'
+import { mapdata as initialMapData } from './mapdata'
+import updateMapData from './runnable'
 
-function bindScript(src, id) {
-  let script = document.createElement('script')
-  script.innerHTML = src
-  script.id = id
-  let head = document.getElementsByTagName('head')[0]
-  head.appendChild(script)
+function getBoundScript(id) {
+  return document.getElementById(id)
 }
 
-function unbindScript(id) {
-  let script = document.getElementById(id)
-
-  let head = document.getElementsByTagName('head')[0]
-  head.removeChild(script)
+async function bindScript(src, id) {
+  try {
+    const script = document.createElement('script')
+    script.innerHTML = src
+    script.id = id
+    let head = document.getElementsByTagName('head')[0]
+    head.appendChild(script)
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-class OutbreakMap extends React.Component {
-  componentDidMount() {
-    bindScript(mapdata, 'mapdata-script')
-    bindScript(statemap, 'statemap-script')
-    const resizeScript = 'simplemaps_statemap_mapdata.main_settings.width=500;'
-    bindScript(resizeScript, 'resize-script')
-    
-    bindScript(runnable, 'runnable-script')
+async function unbindScript(id) {
+  try {
+    const script = getBoundScript(id)
+    if (script) {
+      let head = document.getElementsByTagName('head')[0]
+      head.removeChild(script)
+    }
+  } catch (err) {
+    console.log(err)
   }
+}
 
-  componentWillUnmount() {
-    unbindScript('mapdata-script')
-    unbindScript('statemap-script')
-    unbindScript('resize-script')
-    unbindScript('runnable-script')
-  }
+function OutbreakMap(props) {
+  const [data, setData] = useState(props.data)
+  useEffect(() => {
+    setData(prevData => {
+      if (prevData !== props.data) {
+        if (window.simplemaps_statemap) {
+          updateMapData(props.data)
+        }
+        return props.data
+      }
+      return prevData
+    })
+    return () => {}
+  }, [props])
 
-  render() {
-    return <div id="map"></div>
-  }
+  useEffect(() => {
+    bindScript(statemap, 'statemap-script').then(() => {
+      if (window.simplemaps_statemap.mobile_device) {
+        initialMapData.main_settings.width = 'responsive'
+      }
+      window.simplemaps_statemap.mapdata = initialMapData
+    })
+
+    return () => {
+      unbindScript('statemap-script')
+    }
+  }, [])
+
+  return <div id='outbreak-map' />
 }
 
 export default OutbreakMap
