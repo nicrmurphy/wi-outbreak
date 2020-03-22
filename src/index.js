@@ -59,7 +59,7 @@ function OutbreakMap(props) {
     }
   }, [])
 
-  return <div id='outbreak-map' />
+  return <div id='outbreak-map' className={props.className} />
 }
 
 export default OutbreakMap
