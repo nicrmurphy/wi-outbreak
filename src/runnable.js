@@ -24,9 +24,10 @@ function updateMapData(data) {
       POSITIVE: cases,
       DEATHS: deaths,
       CMNTY_SPRD: cmntySprd,
-      DATE: date
+      DATE: date,
+      COLOR: color
     } = county
-
+    // console.log(name, color.hex())
     let desc = ''
     desc = desc.concat(
       `<strong>${cases} ${cases === 1 ? 'case' : 'cases'}</strong><br/>`
@@ -47,7 +48,8 @@ function updateMapData(data) {
 
     // mapdata.state_specific[id].color = `rgb(${r}, 40, 0)` // ferrari
     // mapdata.state_specific[id].color = `rgb(${r}, 41, 57)` // imperial red
-    mapdata.state_specific[id].color = `rgb(${r ? r : max}, 41, 32)`
+    // mapdata.state_specific[id].color = `rgb(${r ? r : max}, 41, 32)`
+    mapdata.state_specific[id].color = color.hex()
     mapdata.state_specific[id].hover_color = '#FF9000'
   }
   window.simplemaps_statemap.mapdata = mapdata
