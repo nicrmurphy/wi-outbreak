@@ -53,7 +53,9 @@ function updateMapData(data) {
     mapdata.state_specific[id].hover_color = '#FF9000'
   }
   window.simplemaps_statemap.mapdata = mapdata
-  window.simplemaps_statemap.refresh()
+  if (window.simplemaps_statemap.refresh) {
+    window.simplemaps_statemap.refresh()
+  }
 }
 
 export default updateMapData
