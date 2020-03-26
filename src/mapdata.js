@@ -1,6 +1,6 @@
 export const mapdata = {
   main_settings: {
-    width: '500',
+    width: 'responsive',
     background_color: '#FFFFFF',
     background_transparent: 'yes',
     popups: 'detect',

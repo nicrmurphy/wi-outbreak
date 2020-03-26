@@ -48,9 +48,6 @@ function OutbreakMap(props) {
 
   useEffect(() => {
     bindScript(statemap, 'statemap-script').then(() => {
-      if (window.simplemaps_statemap.mobile_device) {
-        initialMapData.main_settings.width = 'responsive'
-      }
       window.simplemaps_statemap.mapdata = initialMapData
     })
 
