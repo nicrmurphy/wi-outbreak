@@ -1,4 +1,5 @@
 # wi-outbreak
+# https://kapu-kawhe.com/wi-outbreak
 
 > Live Statistics of COVID-19 Outbreak in Wisconsin
 
@@ -15,12 +16,12 @@ npm install --save wi-outbreak
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'wi-outbreak'
+import Outbreak from 'wi-outbreak'
 
-class Example extends Component {
+function MyComponent {
   render () {
     return (
-      <MyComponent />
+      <Outbreak />
     )
   }
 }
